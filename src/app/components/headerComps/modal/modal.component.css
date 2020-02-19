@@ -1,0 +1,12 @@
+.modalLauncher {
+  background-image: url("https://i.imgur.com/Ukb4Xab.png");
+}
+.productHolder {
+  border-bottom: solid 1px black;
+}
+h3 {
+  display: inline-block;
+}
+.prodprice {
+  display: inline-block;
+}

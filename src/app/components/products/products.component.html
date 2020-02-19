@@ -1,0 +1,8 @@
+<div class="right" *ngIf="products">
+  <h3>Tutorials</h3>
+  <ul>
+    <li *ngFor="let product of products | async">
+      <a target="_blank">{{ product.name }}</a>
+    </li>
+  </ul>
+</div>

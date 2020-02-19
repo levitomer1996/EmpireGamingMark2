@@ -1,0 +1,16 @@
+<div class="top5Container">
+  <img src="https://i.imgur.com/5gfPi4m.png" class="divTitle" />
+  <div class="card" style="width: 18rem;" *ngFor="let p of arrayProducts">
+    <img class="card-img-top" src="{{ p.img }}" alt="Card image cap" />
+    <div class="card-body">
+      <storng
+        ><h3 class="card-title">{{ p.name }}</h3></storng
+      >
+      <div class="buttons">
+        <button (click)="addToCart(p.id)" class="btn btn-primary">
+          Add to cart {{ p.price }}$
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

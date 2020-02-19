@@ -1,0 +1,19 @@
+.top5Container {
+  display: inline-block;
+  width: 100%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: #b6adad4d;
+}
+button {
+  margin-left: 2%;
+}
+.card {
+  display: inline-block;
+  margin-left: 1%;
+}
+.divTitle {
+  display: block;
+  margin: auto;
+  margin-bottom: 2%;
+}

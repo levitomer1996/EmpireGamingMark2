@@ -1,0 +1,52 @@
+<form id="registerForm" [formGroup]="form" (ngSubmit)="handSubmit(form.value)">
+  <mat-form-field class="emailPassword">
+    <input
+      matInput
+      placeholder="E-mail"
+      formControlName="email"
+      required
+      email
+    />
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    hintLabel="Password must be at least 6 characters"
+    class="emailPassword"
+  >
+    <input
+      matInput
+      #password
+      minlength="6"
+      placeholder="Password"
+      [type]="hide ? 'password' : 'text'"
+      formControlName="password"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="names">
+    <mat-form-field>
+      <input matInput placeholder="First Name" formControlName="fname" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Last name" formControlName="lname" />
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <input matInput placeholder="City" formControlName="city" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Adress" formControlName="adress" />
+  </mat-form-field>
+
+  <button class="glow-on-hover" type="submit">Sign-up</button>
+</form>

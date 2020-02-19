@@ -1,0 +1,11 @@
+<header>
+  <img src="https://i.imgur.com/vHW7bVn.png" />
+  <ng-template #loggedOut>
+    <app-login-register-buttons></app-login-register-buttons>
+  </ng-template>
+  <ng-template [ngIf]="userLogged.logged" [ngIfElse]="loggedOut">
+    <app-login-container [userName]="userLogged.userName"></app-login-container>
+  </ng-template>
+  <app-search></app-search>
+  <app-platform-nav></app-platform-nav>
+</header>
