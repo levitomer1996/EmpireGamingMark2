@@ -11,11 +11,14 @@
   </button>
 </div>
 <div class="modal-body ">
-  <div class="productHolder" *ngFor="let prod of products">
+  <div class="productHolder" *ngFor="let cart of cartProds | async">
     <h3 class="prodname" [ngStyle]="{display: 'inline-block'}">
-      {{prod.name}}
+      {{cart.name}}
     </h3>
-    <h4 class="prodprice" [ngStyle]="{float: 'right'}">{{prod.price}}$</h4>
+    <a class="remove" (click)="removeFromCart(prod._id)">Remove</a>
+    <h4 class="prodprice">
+      <strong>{{cart.price}}$</strong>
+    </h4>
   </div>
 </div>
 <div class="modal-footer">

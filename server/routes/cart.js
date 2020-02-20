@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const mongoose = require("mongoose");
+var moment = require("moment");
 
 let cart = require("../mongoModels/cart");
 let product = require("../mongoModels/products");
@@ -42,7 +43,7 @@ router.post("/carthandle", async (req, res) => {
     if (!isExist) {
       const requestedCart = new cart({
         userOwner: req.body.userOwner,
-        time_created: req.body.time_created,
+        time_created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
         products: req.body.product
       });
       db.collection("carts").insertOne(requestedCart, function(err, cart) {
@@ -70,6 +71,16 @@ router.post("/getusercart", (req, res) => {
       res.status(200).json(prod);
     });
   });
+});
+
+//Remove from cart:
+router.post("/remove", (req, res) => {
+  db.collection("carts").findOneAndUpdate(
+    { userOwner: req.body.userOwner },
+    { $pull: { products: req.body.product } },
+    { multi: true }
+  );
+  res.status(200).json(`${req.body.product} Was removed`);
 });
 
 module.exports = router;

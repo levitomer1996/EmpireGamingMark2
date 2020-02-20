@@ -27,4 +27,11 @@ export class CartService {
       httpOptions
     );
   }
+  revmoveFromCart(id: any) {
+    return this.http.post<any>(
+      `http://localhost:3000/cart/remove`,
+      id,
+      httpOptions
+    );
+  }
 }

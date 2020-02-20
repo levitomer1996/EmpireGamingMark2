@@ -9,4 +9,14 @@ h3 {
 }
 .prodprice {
   display: inline-block;
+  float: right;
+}
+.xbtn {
+  background: url("http://i.imgur.com/iPGpK2u.png");
+  float: right;
+}
+.remove {
+  margin-left: 4%;
+  /* text-decoration-color: blue; */
+  color: blue;
 }

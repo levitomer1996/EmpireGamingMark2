@@ -66,6 +66,7 @@ import { RegisterPageComponent } from "./components/register-page/register-page.
 import { StoreModule } from "@ngrx/store";
 import { productReducer } from "./reducers/products.reducers";
 import { isLoggedReducer } from "./reducers/isLogged.reducers";
+import { cartReducer } from "./reducers/Cart.reducers";
 
 import { LoginContainerComponent } from "./components/headerComps/login-container/login-container.component";
 import { LoginRegisterButtonsComponent } from "./components/headerComps/login-register-buttons/login-register-buttons.component";
@@ -77,6 +78,7 @@ import {
   NgbdModalComponent,
   NgbdModalContent
 } from "./components/headerComps/modal/modal.component";
+import { CheckOutComponent } from "./components/check-out/check-out.component";
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import {
     ProductsComponent,
     Top5Component,
     NgbdModalComponent,
-    NgbdModalContent
+    NgbdModalContent,
+    CheckOutComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +118,8 @@ import {
     MatToolbarModule,
     StoreModule.forRoot({
       product: productReducer,
-      isLogged: isLoggedReducer
+      isLogged: isLoggedReducer,
+      cart: cartReducer
     })
   ],
   exports: [NgbdModalComponent],
