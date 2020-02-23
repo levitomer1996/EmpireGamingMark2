@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 const port = 3000;
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
 app.use(express.json());
 
 var sales = require("./routes/sales");

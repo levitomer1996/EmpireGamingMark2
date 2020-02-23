@@ -5,12 +5,52 @@ var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
 var jwt = require("jsonwebtoken");
 let newUser = require("../mongoModels/newUser");
+var session = require("express-session");
+const uuidv4 = require("uuid/v4");
+
+var secret = "tomer";
 
 mongoose.connect("mongodb://localhost/EmpireGaming", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 var db = mongoose.connection;
+
+router.use(
+  session({
+    secret: secret,
+    name: "egsid",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      path: "/",
+      maxAge: 1000 * 60 * 60,
+      resave: false,
+      saveUninitialized: true
+    }
+  })
+);
+
+router.post("/", (req, res) => {
+  req.session.token = "12";
+  req.session.userEmail = "Tomer@gmail.com  ";
+  req.session.logged = true;
+  res.send(req.session);
+});
+router.post("/d", (req, res) => {
+  res.send(req.session);
+});
+
+router.get("/oninit", (req, res) => {
+  console.log(req.session);
+  if (req.session.logged) {
+    console.log(true);
+    req.status(200).json({ userName: req.session.userEmail });
+  } else {
+    console.log(false);
+    res.status(200).json({ userName: false });
+  }
+});
 
 //Check user existance before inserting it to the database.
 function checkUserExistance(user) {
@@ -66,9 +106,12 @@ function checkUser(user, password) {
 router.post("/login", async (req, res) => {
   try {
     let user = await checkUser(req.body.email, req.body.password);
-    const accessToken = jwt.sign(user, "tomer");
-    var decoded = jwt.verify(accessToken, "tomer");
-
+    const accessToken = jwt.sign(user, secret);
+    var decoded = jwt.verify(accessToken, secret);
+    req.session.token = accessToken;
+    req.session.userEmail = req.body.email;
+    req.session.logged = true;
+    console.log(req.session);
     res.status(200).json({ status: 200, token: accessToken });
   } catch (err) {
     res.json({ message: err, status: 500 });

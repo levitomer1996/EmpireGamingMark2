@@ -68,7 +68,14 @@ router.post("/getusercart", (req, res) => {
     cart
   ) {
     product.find({ _id: { $in: cart.products } }, function(err, prod) {
-      res.status(200).json(prod);
+      if (err) throw err;
+
+      let priceSum = prod[0].price;
+      for (let i = 1; i < prod.length; i++) {
+        priceSum = prod[i].price + priceSum;
+      }
+
+      res.status(200).json({ prod, total: priceSum });
     });
   });
 });

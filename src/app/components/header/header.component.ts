@@ -22,19 +22,5 @@ export class HeaderComponent implements OnInit {
       .subscribe((data: LogState) => (this.userLogged = data));
   }
 
-  ngOnInit(): void {
-    this.ls
-      .handleUserOnit({ token: sessionStorage.getItem("token") })
-      .subscribe(data => (this.token = data));
-    if (this.token.error.message) {
-      this.store.dispatch(new Set_Logged({ logged: false, userName: "" }));
-    } else {
-      this.store.dispatch(
-        new Set_Logged({
-          logged: true,
-          userName: this.token.email
-        })
-      );
-    }
-  }
+  ngOnInit(): void {}
 }

@@ -8,7 +8,7 @@ import { CartState } from "../../../app.state";
 import { interiorProduct } from "src/app/models/cartProduct.model";
 import { Observable } from "rxjs";
 import * as cartActions from "../../../actions/cart.actions";
-
+import { Set_Logged } from "../../../actions/isLogged.actions";
 @Component({
   selector: "ngbd-modal-content",
   templateUrl: "./content.html",
@@ -19,7 +19,7 @@ export class NgbdModalContent {
   products: Product[];
   total;
   cartProds: Observable<interiorProduct[]>;
-  isOpenedOnce = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private cs: CartService,
@@ -32,14 +32,24 @@ export class NgbdModalContent {
     this.cartProds = this.cartStore.select("cart");
   }
   ngOnInit() {
-    console.log(this.isOpenedOnce);
-    if (!this.isOpenedOnce) {
+    console.log(this.cartData);
+    if (this.cartData.isModalOpened == false) {
       let user = { userName: this.cartData.userName };
       this.cs.getUserCart(user).subscribe(data => {
-        data.forEach(p => this.cartStore.dispatch(new cartActions.GetCart(p)));
+        this.total = data.total;
+        data.prod.forEach(p =>
+          this.cartStore.dispatch(new cartActions.GetCart(p))
+        );
       });
+
+      this.store.dispatch(
+        new Set_Logged({
+          logged: true,
+          userName: this.cartData.userName,
+          isModalOpened: true
+        })
+      );
     }
-    this.isOpenedOnce = true;
   }
 
   removeFromCart(id) {

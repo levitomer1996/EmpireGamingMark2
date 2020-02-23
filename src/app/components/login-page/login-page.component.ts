@@ -67,7 +67,11 @@ export class LoginPageComponent implements OnInit {
       if (this.response.status == 200) {
         sessionStorage.setItem("token", this.response.token);
         this.store.dispatch(
-          new Set_Logged({ logged: true, userName: val.email })
+          new Set_Logged({
+            logged: true,
+            userName: val.email,
+            isModalOpened: false
+          })
         );
 
         this.router.navigate(["./"]);

@@ -24,11 +24,9 @@ export class LoginService {
     );
   }
 
-  handleUserOnit(token: token) {
-    return this.http.post<token>(
-      `http://localhost:3000/users/checktoken`,
-      token,
-      httpOptions
-    );
+  handleUserOnit() {
+    return this.http.get(`http://localhost:3000/users/oninit`, {
+      withCredentials: true
+    });
   }
 }

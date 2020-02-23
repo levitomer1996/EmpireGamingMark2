@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
   addProduct(id, name, category, platform, price, img, time_purchase) {
     this.store.dispatch(
       new GetProducts({
-        id: id,
+        _id: id,
         name: name,
         category: category,
         platform: platform,

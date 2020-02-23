@@ -1,18 +1,9 @@
 import { Action } from "@ngrx/store";
 import { interiorProduct } from "../models/cartProduct.model";
 import * as CartActions from "../actions/cart.actions";
-const initialState: interiorProduct = {
-  _id: "",
-  name: "Tomer",
-  category: "",
-  platform: "",
-  price: 0,
-  img: "",
-  time_purchase: 0
-};
 
 export function cartReducer(
-  state: interiorProduct[] = [initialState],
+  state: interiorProduct[] = [],
   action: CartActions.Actions
 ) {
   // Section 3
