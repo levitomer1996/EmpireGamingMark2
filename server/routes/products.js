@@ -14,6 +14,9 @@ router.get("/", (req, res) => {
 });
 router.get("/get", (req, res) => {
   product.find({}, function(err, products) {
+    if (product == null) {
+      res.send("No products");
+    }
     res.send(products);
   });
 });

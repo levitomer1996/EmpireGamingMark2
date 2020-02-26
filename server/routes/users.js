@@ -6,6 +6,7 @@ var salt = bcrypt.genSaltSync(10);
 var jwt = require("jsonwebtoken");
 let newUser = require("../mongoModels/newUser");
 var session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 const uuidv4 = require("uuid/v4");
 
 var secret = "tomer";
@@ -18,6 +19,7 @@ var db = mongoose.connection;
 
 router.use(
   session({
+    store: new MongoStore({ mongooseConnection: db }),
     secret: secret,
     name: "egsid",
     resave: false,
