@@ -32,33 +32,33 @@ export class NgbdModalContent {
     this.cartProds = this.cartStore.select("cart");
   }
   ngOnInit() {
-    console.log(this.cartData);
-    if (this.cartData.isModalOpened == false) {
-      let user = { userName: this.cartData.userName };
-      this.cs.getUserCart(user).subscribe(data => {
-        this.total = data.total;
-        data.prod.forEach(p =>
-          this.cartStore.dispatch(new cartActions.GetCart(p))
-        );
+    let user = { userName: this.cartData.userName };
+    this.cs.getUserCart(user).subscribe(data => {
+      this.total = data.total;
+      data.prod.forEach(p => {
+        this.cartStore.dispatch(new cartActions.GetCart(p));
       });
+    });
 
-      this.store.dispatch(
-        new Set_Logged({
-          logged: true,
-          userName: this.cartData.userName,
-          isModalOpened: true
-        })
-      );
-    }
+    this.store.dispatch(
+      new Set_Logged({
+        logged: true,
+        userName: this.cartData.userName,
+        isModalOpened: true
+      })
+    );
+  }
+  removeAllProds() {
+    this.cartStore.dispatch(new cartActions.RemoveAll());
   }
 
-  removeFromCart(id) {
-    let product = { userOwner: this.cartData.userName, product: id };
+  removeFromCart(obj, index) {
+    this.cartStore.dispatch(new cartActions.RemoveSpecific(index));
+    this.total = this.total - obj.price;
+    let product = { userOwner: this.cartData.userName, product: obj._id };
     this.cs.revmoveFromCart(product).subscribe(data => {
       console.log(data);
     });
-    const index = this.products.indexOf(id);
-    console.log(index);
   }
 }
 

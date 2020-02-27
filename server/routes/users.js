@@ -19,39 +19,45 @@ var db = mongoose.connection;
 
 router.use(
   session({
-    store: new MongoStore({ mongooseConnection: db }),
+    store: new MongoStore({
+      mongooseConnection: db,
+      ttl: 1000 * 60,
+      id: 1
+    }),
     secret: secret,
     name: "egsid",
     resave: false,
     saveUninitialized: false,
     cookie: {
       path: "/",
-      maxAge: 1000 * 60 * 60,
+      maxAge: 1000 * 60,
       resave: false,
       saveUninitialized: true
     }
   })
 );
 
-router.post("/", (req, res) => {
+router.get("/", (req, res) => {
   req.session.token = "12";
   req.session.userEmail = "Tomer@gmail.com  ";
   req.session.logged = true;
   res.send(req.session);
 });
-router.post("/d", (req, res) => {
+router.get("/d", (req, res) => {
   res.send(req.session);
 });
 
 router.get("/oninit", (req, res) => {
+  // console.log(req.session);
+  // if (req.session.logged) {
+  //   console.log(true);
+  //   res.status(200).json({ userName: req.session.userEmail });
+  // } else {
+  //   console.log(false);
+  //   res.status(200).json({ userName: false });
+  // }
+
   console.log(req.session);
-  if (req.session.logged) {
-    console.log(true);
-    req.status(200).json({ userName: req.session.userEmail });
-  } else {
-    console.log(false);
-    res.status(200).json({ userName: false });
-  }
 });
 
 //Check user existance before inserting it to the database.

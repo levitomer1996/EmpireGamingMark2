@@ -79,6 +79,7 @@ import {
   NgbdModalContent
 } from "./components/headerComps/modal/modal.component";
 import { CheckOutComponent } from "./components/check-out/check-out.component";
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { CheckOutComponent } from "./components/check-out/check-out.component";
     Top5Component,
     NgbdModalComponent,
     NgbdModalContent,
-    CheckOutComponent
+    CheckOutComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

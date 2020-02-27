@@ -9,8 +9,12 @@ export function cartReducer(
   // Section 3
   switch (action.type) {
     case CartActions.GET_CART:
-      console.log(state);
       return [...state, action.payload];
+    case CartActions.REMOVE_ALL_PRODS:
+      return [];
+    case CartActions.REMOVE_SPECIFIC:
+      state.splice(action.payload, 1);
+      return state;
     default:
       return state;
   }

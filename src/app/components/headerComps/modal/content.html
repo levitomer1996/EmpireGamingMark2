@@ -5,17 +5,20 @@
     type="button"
     class="close"
     aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
+    (click)="activeModal.dismiss('Cross click'); removeAllProds()"
   >
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body ">
-  <div class="productHolder" *ngFor="let cart of cartProds | async">
+  <div
+    class="productHolder"
+    *ngFor="let cart of cartProds | async; let i = index"
+  >
     <h3 class="prodname" [ngStyle]="{display: 'inline-block'}">
       {{cart.name}}
     </h3>
-    <a class="remove" (click)="removeFromCart(prod._id)">Remove</a>
+    <a class="remove" (click)="removeFromCart(cart, i)">Remove</a>
     <h4 class="prodprice">
       <strong>{{cart.price}}$</strong>
     </h4>

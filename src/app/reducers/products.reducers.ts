@@ -19,7 +19,7 @@ export function productReducer(
   // Section 3
   switch (action.type) {
     case ProductActions.GET_PRODUCTS:
-      return [...state, action.payload];
+      return undefined;
     default:
       return state;
   }

@@ -16,7 +16,7 @@ export class RegisterPageComponent implements OnInit {
   //Validators
   email = new FormControl("", [Validators.required, Validators.email]);
   form;
-
+  response;
   constructor(
     private rs: RegisterService,
     private registerForm: FormBuilder,
@@ -52,11 +52,11 @@ export class RegisterPageComponent implements OnInit {
   async handSubmit(val) {
     try {
       let pending = await this.postUser(val);
-      console.log(pending);
-      if (pending.status == 200) {
+      this.response = pending;
+      if (this.response.status == 200) {
         this.router.navigate(["./"]);
-      } else if (pending.status == 500) {
-        alert(pending.message);
+      } else if (this.response.status == 500) {
+        alert(this.response.message);
       }
     } catch (err) {}
   }
