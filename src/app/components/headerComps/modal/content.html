@@ -26,6 +26,11 @@
 </div>
 <div class="modal-footer">
   <h2 class="total">Total: <strong>{{total}}$</strong></h2>
-  <button class="checkout"><strong>Checkout</strong></button>
+  <button
+    (click)=" checkOut(); activeModal.dismiss('Cross click')"
+    class="checkout"
+  >
+    <strong>Checkout</strong>
+  </button>
 </div>
 `

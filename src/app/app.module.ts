@@ -7,6 +7,7 @@ import { HeaderComponent } from "./components/header/header.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SearchComponent } from "./components/headerComps/search/search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 //bootstrap
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
@@ -79,7 +80,7 @@ import {
   NgbdModalContent
 } from "./components/headerComps/modal/modal.component";
 import { CheckOutComponent } from "./components/check-out/check-out.component";
-import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentComponent } from "./components/payment/payment.component";
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { PaymentComponent } from './components/payment/payment.component';
     ScrollingModule,
     MatButtonModule,
     MatToolbarModule,
+    MatSelectModule,
     StoreModule.forRoot({
       product: productReducer,
       isLogged: isLoggedReducer,

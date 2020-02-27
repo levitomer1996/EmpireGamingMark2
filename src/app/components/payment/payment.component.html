@@ -1,1 +1,50 @@
-<p>payment works!</p>
+<form action="" class="cform" [formGroup]="form">
+  <input
+    class="form-control"
+    aria-label="Sizing example input"
+    aria-describedby="inputGroup-sizing-sm"
+    placeholder="Credit card number"
+    minlength="16"
+  />
+  <div class="exp">
+    <mat-form-field class="month">
+      <mat-label>Month</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let mon of monthes" [value]="mon.num">
+          {{ mon.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="month">
+      <mat-label>Year</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let year of yearsList" [value]="year">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="namesHolder">
+    <input
+      type="text"
+      aria-label="First name"
+      id="fname"
+      class="form-control"
+      placeholder="First name"
+    />
+    <input
+      type="text"
+      aria-label="Last name"
+      id="lname"
+      class="form-control"
+      placeholder="Last name"
+    />
+  </div>
+  <input
+    class="form-control"
+    id="cvc"
+    aria-label="Sizing example input"
+    aria-describedby="inputGroup-sizing-sm"
+    placeholder="CVC"
+  />
+</form>

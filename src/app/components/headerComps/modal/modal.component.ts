@@ -9,6 +9,7 @@ import { interiorProduct } from "src/app/models/cartProduct.model";
 import { Observable } from "rxjs";
 import * as cartActions from "../../../actions/cart.actions";
 import { Set_Logged } from "../../../actions/isLogged.actions";
+import { Router } from "@angular/router";
 @Component({
   selector: "ngbd-modal-content",
   templateUrl: "./content.html",
@@ -24,7 +25,8 @@ export class NgbdModalContent {
     public activeModal: NgbActiveModal,
     private cs: CartService,
     private store: Store<LogState>,
-    private cartStore: Store<CartState>
+    private cartStore: Store<CartState>,
+    private router: Router
   ) {
     store
       .select("isLogged")
@@ -50,6 +52,10 @@ export class NgbdModalContent {
   }
   removeAllProds() {
     this.cartStore.dispatch(new cartActions.RemoveAll());
+  }
+
+  checkOut() {
+    this.router.navigate(["./payment"]);
   }
 
   removeFromCart(obj, index) {

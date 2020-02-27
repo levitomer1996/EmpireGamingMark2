@@ -1,0 +1,26 @@
+.cform {
+  width: 30%;
+  margin: auto;
+  margin-top: 5%;
+}
+.number {
+  width: 100%;
+}
+.month {
+  width: 50%;
+}
+.exp {
+  margin-top: 8%;
+}
+#fname {
+  width: 50%;
+  display: inline-block;
+}
+#lname {
+  display: inline-block;
+  width: 50%;
+}
+#cvc {
+  width: 15%;
+  margin-top: 3%;
+}
