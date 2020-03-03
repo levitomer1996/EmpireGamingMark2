@@ -34,4 +34,12 @@ export class CartService {
       httpOptions
     );
   }
+
+  checkCreditCard(details) {
+    return this.http.post<any>(
+      `http://localhost:3000/cart/checkcc`,
+      details,
+      httpOptions
+    );
+  }
 }

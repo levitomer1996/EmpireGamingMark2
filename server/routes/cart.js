@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const mongoose = require("mongoose");
 var moment = require("moment");
+var CreditCard = require("credit-card");
 
 let cart = require("../mongoModels/cart");
 let product = require("../mongoModels/products");
@@ -13,9 +14,11 @@ mongoose.connect("mongodb://localhost/EmpireGaming", {
 var db = mongoose.connection;
 
 router.get("/get", (req, res) => {
-  cart.find({}, function(err, carts) {
-    res.send(carts);
-  });
+  // cart.find({}, function(err, carts) {
+  //   res.send(carts);
+  // });
+  var validation = CreditCard.validate(card);
+  res.send(validation);
 });
 
 //Check if cart is already exist.
@@ -88,6 +91,42 @@ router.post("/remove", (req, res) => {
     { multi: true }
   );
   res.status(200).json(`${req.body.product} Was removed`);
+});
+
+//Handle orders
+function checkCardValid(c) {
+  return new Promise((resolve, reject) => {
+    let isCardValid = CreditCard.validate(c);
+    if (!isCardValid.validCardNumber) {
+      reject("Number is invalid");
+    } else if (isCardValid.isExpired) {
+      reject("Card is expired");
+    } else if (!isCardValid.validCvv) {
+      reject("Invalid CVV");
+    } else if (!isCardValid.validExpiryMonth) {
+      reject("Invalid Date");
+    } else if (!isCardValid.validExpiryYear) {
+      reject("Invalid Date");
+    } else {
+      resolve();
+    }
+  });
+}
+router.post("/checkcc", async (req, res) => {
+  try {
+    let card = {
+      cardType: "VISA",
+      number: req.body.number,
+      expiryMonth: "0" + req.body.expMonth,
+      expiryYear: req.body.expYear,
+      cvv: req.body.cvv
+    };
+    let isValid = await checkCardValid(card);
+
+    res.status(200).send({ status: 200, card });
+  } catch (err) {
+    res.send({ err });
+  }
 });
 
 module.exports = router;

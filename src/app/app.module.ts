@@ -14,8 +14,9 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 //Material
 // import { MatIconModule } from "@angular/material/icon";
 // import { MatFormFieldModule } from "@angular/material/form-field";
-// import { NgModule } from "@angular/core";
+
 import { A11yModule } from "@angular/cdk/a11y";
+
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
@@ -69,6 +70,9 @@ import { productReducer } from "./reducers/products.reducers";
 import { isLoggedReducer } from "./reducers/isLogged.reducers";
 import { cartReducer } from "./reducers/Cart.reducers";
 
+//Credit Card
+import { NgXCreditCardsModule } from "ngx-credit-cards";
+
 import { LoginContainerComponent } from "./components/headerComps/login-container/login-container.component";
 import { LoginRegisterButtonsComponent } from "./components/headerComps/login-register-buttons/login-register-buttons.component";
 import { CardsLayoutComponent } from "./components/homeComps/cards-layout/cards-layout.component";
@@ -107,12 +111,14 @@ import { PaymentComponent } from "./components/payment/payment.component";
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+
     HttpClientModule,
     MatIconModule,
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatCheckboxModule,
     A11yModule,
     DragDropModule,
     PortalModule,
@@ -120,6 +126,7 @@ import { PaymentComponent } from "./components/payment/payment.component";
     MatButtonModule,
     MatToolbarModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     StoreModule.forRoot({
       product: productReducer,
       isLogged: isLoggedReducer,

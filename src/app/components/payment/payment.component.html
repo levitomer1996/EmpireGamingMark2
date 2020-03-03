@@ -1,15 +1,30 @@
-<form action="" class="cform" [formGroup]="form">
-  <input
-    class="form-control"
-    aria-label="Sizing example input"
-    aria-describedby="inputGroup-sizing-sm"
-    placeholder="Credit card number"
-    minlength="16"
-  />
+<form
+  action=""
+  class="cform"
+  [formGroup]="form"
+  (ngSubmit)="handleSubmit(form.value)"
+  *ngIf="userLogged.logged"
+>
+  <mat-form-field class="emailPassword">
+    <input
+      matInput
+      placeholder="Cards number"
+      formControlName="number"
+      required
+      number
+      minlength="16"
+      maxlength="16"
+    />
+    <mat-error *ngIf="number.invalid">{{ getErrorMessage() }}</mat-error>
+    <mat-error *ngIf="number.errors.minlength"
+      >Number must be 16 digital numbers.</mat-error
+    >
+  </mat-form-field>
+
   <div class="exp">
     <mat-form-field class="month">
       <mat-label>Month</mat-label>
-      <mat-select>
+      <mat-select formControlName="expMonth">
         <mat-option *ngFor="let mon of monthes" [value]="mon.num">
           {{ mon.name }}
         </mat-option>
@@ -17,7 +32,7 @@
     </mat-form-field>
     <mat-form-field class="month">
       <mat-label>Year</mat-label>
-      <mat-select>
+      <mat-select formControlName="expYear">
         <mat-option *ngFor="let year of yearsList" [value]="year">
           {{ year }}
         </mat-option>
@@ -31,6 +46,7 @@
       id="fname"
       class="form-control"
       placeholder="First name"
+      formControlName="ownerF_name"
     />
     <input
       type="text"
@@ -38,6 +54,7 @@
       id="lname"
       class="form-control"
       placeholder="Last name"
+      formControlName="ownerL_name"
     />
   </div>
   <input
@@ -45,6 +62,14 @@
     id="cvc"
     aria-label="Sizing example input"
     aria-describedby="inputGroup-sizing-sm"
-    placeholder="CVC"
+    placeholder="CVV"
+    maxlength="3"
+    formControlName="cvv"
   />
+
+  <button class="glow-on-hover" type="submit">Check-out</button>
+  <ngb-alert [dismissible]="false" *ngIf="showAlert" class="alert">
+    <strong>{{ error }}</strong>
+  </ngb-alert>
 </form>
+><mat-spinner *ngIf="showSpinner"></mat-spinner>
