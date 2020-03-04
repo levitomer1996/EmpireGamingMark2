@@ -6,6 +6,7 @@ var CreditCard = require("credit-card");
 
 let cart = require("../mongoModels/cart");
 let product = require("../mongoModels/products");
+let order = require("../mongoModels/order");
 
 mongoose.connect("mongodb://localhost/EmpireGaming", {
   useNewUrlParser: true,
@@ -128,5 +129,34 @@ router.post("/checkcc", async (req, res) => {
     res.send({ err });
   }
 });
+router.post("/temporaryorder", (req, res) => {
+  db.collection("users").findOne({ email: req.body.email }, (err, user) => {
+    console.log(user);
+    res.status(200).json({ user });
+  });
+});
 
+router.post("/createorder", (req, res) => {
+  db.collection("users").findOne(
+    { email: `${req.body.userOwner}` },
+    (err, user) => {
+      let requestedOrder = new order({
+        total: req.body.total,
+        name: user.fname + " " + user.lname,
+        OwnerEmail: user.email,
+        city: user.city,
+        street: user.adress,
+        time_Created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
+        arrival_Time: moment(Date.now())
+          .add(30, "days")
+          .format("ll"),
+        products: req.body.products,
+        lastDigits: req.body.lastFour
+      });
+      db.collection("orders").insertOne(requestedOrder, function(err, a) {
+        res.status(200).send(a.user);
+      });
+    }
+  );
+});
 module.exports = router;

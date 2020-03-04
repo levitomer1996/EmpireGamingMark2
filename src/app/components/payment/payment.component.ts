@@ -13,8 +13,12 @@ import { Observable } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { CartState } from "../../app.state";
 import { LogState } from "../../app.state";
+import { OrderState } from "../../app.state";
+import { TempoState } from "../../app.state";
 import { resolve } from "dns";
 import { rejects } from "assert";
+import { Order } from "src/app/models/order.model";
+import { checkCC } from "./modules";
 
 interface Month {
   name: string;
@@ -27,11 +31,13 @@ interface Month {
 })
 export class PaymentComponent implements OnInit {
   //Rendering Controls.
-  showSpinner = false;
+  showSpinner: boolean = false;
   userLogged;
-  showForm;
-
+  showForm: boolean;
+  showSecondPage: boolean;
+  Tempo;
   cartProds: interiorProduct[];
+  order;
   response;
   error: string;
   showAlert = false;
@@ -76,6 +82,8 @@ export class PaymentComponent implements OnInit {
     private cs: CartService,
     private store: Store<CartState>,
     private isLogged: Store<LogState>,
+    private orderState: Store<OrderState>,
+    private TempoState: Store<TempoState>,
     private router: Router
   ) {
     store.select("cart").subscribe(data => {
@@ -84,6 +92,12 @@ export class PaymentComponent implements OnInit {
     isLogged
       .select("isLogged")
       .subscribe((data: LogState) => (this.userLogged = data));
+
+    orderState.select("order").subscribe(data => (this.order = data));
+    TempoState.select("Tempo").subscribe(data => {
+      this.Tempo = data;
+    });
+    console.log(this.Tempo);
     this.showForm = this.userLogged.logged;
   }
 
@@ -97,6 +111,7 @@ export class PaymentComponent implements OnInit {
       ownerL_name: String,
       cvv: Number
     });
+    console.log(this.cartProds);
   }
 
   getErrorMessage() {
@@ -106,6 +121,8 @@ export class PaymentComponent implements OnInit {
       ? "Number is too short, please enter 16 digital numbers."
       : "";
   }
+  //Handle Submit.
+  //Check if Credit card is valid.
   checkCC(details) {
     return new Promise((resolve, reject) => {
       this.cs.checkCreditCard(details).subscribe(data => {
@@ -125,14 +142,28 @@ export class PaymentComponent implements OnInit {
       });
     });
   }
+  //Create Temporary Order in MongoDB.
+  createDataBaseOrder(order) {
+    this.cs.CreateOrder(order).subscribe(data => console.log(data));
+  }
 
   async handleSubmit(details) {
     try {
-      this.showSpinner = true;
       this.showForm = false;
-      let isValid = await this.checkCC(details);
+      this.showSpinner = true;
+      await this.checkCC(details);
+      let orderObj = {
+        total: this.order.total,
+        products: this.cartProds,
+        userOwner: this.order.userOwner,
+        lastFour: details.number.substring(12)
+      };
+      await this.createDataBaseOrder(orderObj);
+      alert("work");
       this.showSpinner = false;
       this.showForm = false;
+      this.showSecondPage = true;
+      console.log(this.showSecondPage);
     } catch (error) {}
   }
 }

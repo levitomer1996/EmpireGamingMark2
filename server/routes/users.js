@@ -37,6 +37,7 @@ router.use(
   })
 );
 
+
 router.get("/", (req, res) => {
   req.session.token = "12";
   req.session.userEmail = "Tomer@gmail.com  ";
@@ -136,5 +137,10 @@ router.post("/checktoken", (req, res) => {
     res.status(200).json(decoded);
   });
 });
+
+
+
+
+
 
 module.exports = router;

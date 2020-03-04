@@ -1,15 +1,29 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CartService } from "../../../services/CartSerice/cart.service";
-import { LogState } from "../../../app.state";
+import { LogState, TempoState } from "../../../app.state";
+import { OrderState } from "../../../app.state";
+
 import { Store, select } from "@ngrx/store";
 import { Product } from "../../../models/products.model";
 import { CartState } from "../../../app.state";
 import { interiorProduct } from "src/app/models/cartProduct.model";
-import { Observable } from "rxjs";
+import { Observable, from } from "rxjs";
+//Actions
 import * as cartActions from "../../../actions/cart.actions";
+import * as orderActions from "../../../actions/orders.actions";
+import * as TempoActions from "../../../actions/tempoOrder.actions";
 import { Set_Logged } from "../../../actions/isLogged.actions";
-import { Router } from "@angular/router";
+
+import { Router, Data } from "@angular/router";
+import { Order } from "src/app/models/order.model";
+import { TempoOrder } from "../../../models/tempo.model";
+
+//User Response Model
+export class data {
+  user: Object;
+}
+
 @Component({
   selector: "ngbd-modal-content",
   templateUrl: "./content.html",
@@ -17,21 +31,26 @@ import { Router } from "@angular/router";
 })
 export class NgbdModalContent {
   cartData;
+  userReponse;
+  order: Observable<TempoOrder>;
   products: Product[];
   total;
   cartProds: Observable<interiorProduct[]>;
-
+  prodList;
   constructor(
     public activeModal: NgbActiveModal,
     private cs: CartService,
     private store: Store<LogState>,
     private cartStore: Store<CartState>,
+    private orderStore: Store<TempoState>,
     private router: Router
   ) {
     store
       .select("isLogged")
       .subscribe((data: LogState) => (this.cartData = data));
+    cartStore.select("cart").subscribe(data => (this.prodList = data));
     this.cartProds = this.cartStore.select("cart");
+    this.order = this.orderStore.select("Tempo");
   }
   ngOnInit() {
     let user = { userName: this.cartData.userName };
@@ -54,8 +73,30 @@ export class NgbdModalContent {
     this.cartStore.dispatch(new cartActions.RemoveAll());
   }
 
-  checkOut() {
-    this.router.navigate(["./payment"]);
+  procces(email) {
+    return new Promise(reso => {
+      this.cs.getUser(email).subscribe((data: Data) => {
+        reso(data.user);
+      });
+    });
+  }
+  async checkOut() {
+    try {
+      var pend = await this.procces({ email: this.cartData.userName });
+      this.userReponse = pend;
+      console.log(this.userReponse);
+      this.orderStore.dispatch(
+        new TempoActions.AddTempo({
+          products: this.prodList,
+          name: this.userReponse.fname + " " + this.userReponse.lname,
+          total: this.total,
+          city: this.userReponse.city,
+          adress: this.userReponse.adress
+        })
+      );
+
+      this.router.navigate(["./payment"]);
+    } catch (error) {}
   }
 
   removeFromCart(obj, index) {

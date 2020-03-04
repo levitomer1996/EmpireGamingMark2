@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CartProduct } from "../../models/cartProduct.model";
+import { Order } from "../../models/order.model";
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "application/json"
@@ -39,6 +40,20 @@ export class CartService {
     return this.http.post<any>(
       `http://localhost:3000/cart/checkcc`,
       details,
+      httpOptions
+    );
+  }
+  CreateOrder(order) {
+    return this.http.post(
+      `http://localhost:3000/cart/createorder`,
+      order,
+      httpOptions
+    );
+  }
+  getUser(email) {
+    return this.http.post(
+      `http://localhost:3000/cart/temporaryorder`,
+      email,
       httpOptions
     );
   }

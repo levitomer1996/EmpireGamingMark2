@@ -69,6 +69,8 @@ import { StoreModule } from "@ngrx/store";
 import { productReducer } from "./reducers/products.reducers";
 import { isLoggedReducer } from "./reducers/isLogged.reducers";
 import { cartReducer } from "./reducers/Cart.reducers";
+import { orderReducer } from "./reducers/Order.reducers";
+import { TempoReducer } from "./reducers/Tempo.recuers";
 
 //Credit Card
 import { NgXCreditCardsModule } from "ngx-credit-cards";
@@ -85,6 +87,7 @@ import {
 } from "./components/headerComps/modal/modal.component";
 import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
+import { SecondPaymentComponent } from "./components/payment/second-payment/second-payment.component";
 
 @NgModule({
   declarations: [
@@ -104,7 +107,8 @@ import { PaymentComponent } from "./components/payment/payment.component";
     NgbdModalComponent,
     NgbdModalContent,
     CheckOutComponent,
-    PaymentComponent
+    PaymentComponent,
+    SecondPaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +134,9 @@ import { PaymentComponent } from "./components/payment/payment.component";
     StoreModule.forRoot({
       product: productReducer,
       isLogged: isLoggedReducer,
-      cart: cartReducer
+      cart: cartReducer,
+      order: orderReducer,
+      tempo: TempoReducer
     })
   ],
   exports: [NgbdModalComponent],

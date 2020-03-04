@@ -3,7 +3,7 @@
   class="cform"
   [formGroup]="form"
   (ngSubmit)="handleSubmit(form.value)"
-  *ngIf="userLogged.logged"
+  *ngIf="showForm"
 >
   <mat-form-field class="emailPassword">
     <input
@@ -72,4 +72,5 @@
     <strong>{{ error }}</strong>
   </ngb-alert>
 </form>
-><mat-spinner *ngIf="showSpinner"></mat-spinner>
+<mat-spinner *ngIf="showSpinner"></mat-spinner>
+<app-second-payment></app-second-payment>
