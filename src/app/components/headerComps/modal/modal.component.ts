@@ -50,7 +50,7 @@ export class NgbdModalContent {
       .subscribe((data: LogState) => (this.cartData = data));
     cartStore.select("cart").subscribe(data => (this.prodList = data));
     this.cartProds = this.cartStore.select("cart");
-    this.order = this.orderStore.select("Tempo");
+    this.order = this.orderStore.select("tempo");
   }
   ngOnInit() {
     let user = { userName: this.cartData.userName };
@@ -91,7 +91,9 @@ export class NgbdModalContent {
           name: this.userReponse.fname + " " + this.userReponse.lname,
           total: this.total,
           city: this.userReponse.city,
-          adress: this.userReponse.adress
+          adress: this.userReponse.adress,
+          email: this.userReponse.email,
+          fourDigit: 1111
         })
       );
 

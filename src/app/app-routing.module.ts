@@ -6,13 +6,15 @@ import { RegisterPageComponent } from "./components/register-page/register-page.
 import { ProductsComponent } from "./components/products/products.component";
 import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
+import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirmed-page.component";
 
 const routes: Routes = [
   { path: "", component: HomepageComponent },
   { path: "login", component: LoginPageComponent },
   { path: "register", component: RegisterPageComponent },
   { path: "products", component: ProductsComponent },
-  { path: "payment", component: PaymentComponent }
+  { path: "payment", component: PaymentComponent },
+  { path: "order/:id", component: CofirmedPageComponent }
 ];
 
 @NgModule({

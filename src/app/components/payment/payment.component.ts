@@ -19,6 +19,7 @@ import { resolve } from "dns";
 import { rejects } from "assert";
 import { Order } from "src/app/models/order.model";
 import { checkCC } from "./modules";
+import * as TempoActions from "../../actions/tempoOrder.actions";
 
 interface Month {
   name: string;
@@ -38,6 +39,7 @@ export class PaymentComponent implements OnInit {
   Tempo;
   cartProds: interiorProduct[];
   order;
+  tStore;
   response;
   error: string;
   showAlert = false;
@@ -81,6 +83,7 @@ export class PaymentComponent implements OnInit {
     private paymentForm: FormBuilder,
     private cs: CartService,
     private store: Store<CartState>,
+    private tempoStore: Store<TempoState>,
     private isLogged: Store<LogState>,
     private orderState: Store<OrderState>,
     private TempoState: Store<TempoState>,
@@ -92,12 +95,10 @@ export class PaymentComponent implements OnInit {
     isLogged
       .select("isLogged")
       .subscribe((data: LogState) => (this.userLogged = data));
-
+    this.tStore = tempoStore.select("tempo");
     orderState.select("order").subscribe(data => (this.order = data));
-    TempoState.select("Tempo").subscribe(data => {
-      this.Tempo = data;
-    });
-    console.log(this.Tempo);
+    TempoState.select("tempo").subscribe(data => (this.Tempo = data));
+    console.log(this.tStore);
     this.showForm = this.userLogged.logged;
   }
 
@@ -143,9 +144,6 @@ export class PaymentComponent implements OnInit {
     });
   }
   //Create Temporary Order in MongoDB.
-  createDataBaseOrder(order) {
-    this.cs.CreateOrder(order).subscribe(data => console.log(data));
-  }
 
   async handleSubmit(details) {
     try {
@@ -158,8 +156,8 @@ export class PaymentComponent implements OnInit {
         userOwner: this.order.userOwner,
         lastFour: details.number.substring(12)
       };
-      await this.createDataBaseOrder(orderObj);
-      alert("work");
+      this.tempoStore.dispatch(new TempoActions.AddDigit(details.cvv));
+
       this.showSpinner = false;
       this.showForm = false;
       this.showSecondPage = true;

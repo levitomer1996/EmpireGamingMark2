@@ -38,6 +38,10 @@
   border-radius: 10px;
 }
 
+.spinner {
+  margin: auto;
+  margin-top: 10%;
+}
 .glow-on-hover:before {
   content: "";
   background: linear-gradient(

@@ -57,4 +57,7 @@ export class CartService {
       httpOptions
     );
   }
+  getOrder(id) {
+    return this.http.get(`http://localhost:3000/cart/getorder/${id}`);
+  }
 }

@@ -88,6 +88,7 @@ import {
 import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
 import { SecondPaymentComponent } from "./components/payment/second-payment/second-payment.component";
+import { CofirmedPageComponent } from './components/payment/cofirmed-page/cofirmed-page.component';
 
 @NgModule({
   declarations: [
@@ -108,17 +109,19 @@ import { SecondPaymentComponent } from "./components/payment/second-payment/seco
     NgbdModalContent,
     CheckOutComponent,
     PaymentComponent,
-    SecondPaymentComponent
+    SecondPaymentComponent,
+    CofirmedPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-
+    MatCardModule,
     HttpClientModule,
     MatIconModule,
     MatFormFieldModule,
+    MatListModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,

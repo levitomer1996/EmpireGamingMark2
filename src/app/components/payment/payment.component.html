@@ -40,22 +40,25 @@
     </mat-form-field>
   </div>
   <div class="namesHolder">
-    <input
-      type="text"
-      aria-label="First name"
-      id="fname"
-      class="form-control"
-      placeholder="First name"
-      formControlName="ownerF_name"
-    />
-    <input
-      type="text"
-      aria-label="Last name"
-      id="lname"
-      class="form-control"
-      placeholder="Last name"
-      formControlName="ownerL_name"
-    />
+    <mat-form-field>
+      <input
+        type="text"
+        aria-label="First name"
+        id="fname"
+        matInput
+        placeholder="First name"
+        formControlName="ownerF_name"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        aria-label="Last name"
+        id="lname"
+        matInput
+        placeholder="Last name"
+        formControlName="ownerL_name"
+    /></mat-form-field>
   </div>
   <input
     class="form-control"
@@ -72,5 +75,5 @@
     <strong>{{ error }}</strong>
   </ngb-alert>
 </form>
-<mat-spinner *ngIf="showSpinner"></mat-spinner>
-<app-second-payment></app-second-payment>
+<mat-spinner class="spinner" *ngIf="showSpinner"></mat-spinner>
+<app-second-payment *ngIf="showSecondPage"></app-second-payment>

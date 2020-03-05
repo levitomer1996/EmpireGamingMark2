@@ -138,8 +138,9 @@ router.post("/temporaryorder", (req, res) => {
 
 router.post("/createorder", (req, res) => {
   db.collection("users").findOne(
-    { email: `${req.body.userOwner}` },
+    { email: `${req.body.email}` },
     (err, user) => {
+      console.log(user);
       let requestedOrder = new order({
         total: req.body.total,
         name: user.fname + " " + user.lname,
@@ -154,9 +155,19 @@ router.post("/createorder", (req, res) => {
         lastDigits: req.body.lastFour
       });
       db.collection("orders").insertOne(requestedOrder, function(err, a) {
-        res.status(200).send(a.user);
+        console.log(a);
+        res.status(200).send(a.ops[0]._id);
       });
     }
   );
+});
+
+//Get Order data:
+router.get("/getorder/:id", (req, res) => {
+  console.log(req.params.id);
+
+  db.collection("orders").find({ _id: req.params.id }, (er, order) => {
+    console.log(order);
+  });
 });
 module.exports = router;

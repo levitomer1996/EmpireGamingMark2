@@ -19,5 +19,5 @@ export interface OrderState {
   readonly order: Order;
 }
 export interface TempoState {
-  readonly Tempo: TempoOrder;
+  readonly tempo: TempoOrder;
 }
