@@ -66,6 +66,7 @@ export class LoginPageComponent implements OnInit {
 
       if (this.response.status == 200) {
         sessionStorage.setItem("token", this.response.token);
+
         this.store.dispatch(
           new Set_Logged({
             logged: true,

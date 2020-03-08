@@ -2,7 +2,20 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 const port = 3000;
-app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
+var session = require("express-session");
+app.set("trust proxy", 1);
+app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
+app.use(
+  session({
+    secret: "keyboard cat",
+    cookie: {
+      maxAge: 7200000,
+      secure: false,
+      saveUninitialized: true,
+      resave: true
+    }
+  })
+);
 app.use(express.json());
 
 var sales = require("./routes/sales");

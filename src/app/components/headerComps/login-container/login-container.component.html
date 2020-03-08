@@ -1,8 +1,9 @@
 <div class="userContain">
-  <h4>
+  <a class="hello">
     Hello<strong> {{ userName }}</strong>
-  </h4>
+  </a>
   <a href="" class="userPage">Go to user page</a>
 
-  <ngbd-modal-component [userName]="userName"></ngbd-modal-component>
+  <ngbd-modal-component></ngbd-modal-component>
+  <button (click)="logout()">Logout</button>
 </div>

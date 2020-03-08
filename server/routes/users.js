@@ -17,48 +17,39 @@ mongoose.connect("mongodb://localhost/EmpireGaming", {
 });
 var db = mongoose.connection;
 
-router.use(
-  session({
-    store: new MongoStore({
-      mongooseConnection: db,
-      ttl: 1000 * 60,
-      id: 1
-    }),
-    secret: secret,
-    name: "egsid",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      path: "/",
-      maxAge: 1000 * 60,
-      resave: false,
-      saveUninitialized: true
+//Verify Token.
+const vt = (req, res, next) => {
+  let token = req.session.token;
+  console.log(token);
+  jwt.verify(token, secret, function(err, decoded) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(401);
+    } else {
+      req.session.save();
+      next();
     }
-  })
-);
-
-
+  });
+};
 router.get("/", (req, res) => {
-  req.session.token = "12";
+  const accessToken = jwt.sign({ Jesus: "Christ" }, secret);
+  req.session.token = accessToken;
   req.session.userEmail = "Tomer@gmail.com  ";
   req.session.logged = true;
   res.send(req.session);
 });
-router.get("/d", (req, res) => {
+router.get("/d", vt, (req, res) => {
   res.send(req.session);
 });
 
-router.get("/oninit", (req, res) => {
-  // console.log(req.session);
-  // if (req.session.logged) {
-  //   console.log(true);
-  //   res.status(200).json({ userName: req.session.userEmail });
-  // } else {
-  //   console.log(false);
-  //   res.status(200).json({ userName: false });
-  // }
-
-  console.log(req.session);
+router.post("/oninit", (req, res) => {
+  jwt.verify(req.body.token, secret, (err, decoded) => {
+    if (err) {
+      res.send({ token: false });
+    } else {
+      res.status(200).send({ token: decoded });
+    }
+  });
 });
 
 //Check user existance before inserting it to the database.
@@ -118,9 +109,8 @@ router.post("/login", async (req, res) => {
     const accessToken = jwt.sign(user, secret);
     var decoded = jwt.verify(accessToken, secret);
     req.session.token = accessToken;
-    req.session.userEmail = req.body.email;
-    req.session.logged = true;
-    console.log(req.session);
+    req.session.isLogged = true;
+    req.session.save();
     res.status(200).json({ status: 200, token: accessToken });
   } catch (err) {
     res.json({ message: err, status: 500 });
@@ -137,10 +127,5 @@ router.post("/checktoken", (req, res) => {
     res.status(200).json(decoded);
   });
 });
-
-
-
-
-
 
 module.exports = router;

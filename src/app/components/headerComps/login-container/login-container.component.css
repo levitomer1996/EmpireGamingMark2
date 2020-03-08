@@ -3,4 +3,8 @@
 }
 .userPage {
   margin-right: 5%;
+  display: block;
+}
+.hello {
+  display: block;
 }

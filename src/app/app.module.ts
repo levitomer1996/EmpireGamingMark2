@@ -88,7 +88,7 @@ import {
 import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
 import { SecondPaymentComponent } from "./components/payment/second-payment/second-payment.component";
-import { CofirmedPageComponent } from './components/payment/cofirmed-page/cofirmed-page.component';
+import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirmed-page.component";
 
 @NgModule({
   declarations: [
