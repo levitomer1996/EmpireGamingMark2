@@ -71,16 +71,28 @@ router.post("/getusercart", (req, res) => {
     err,
     cart
   ) {
-    product.find({ _id: { $in: cart.products } }, function(err, prod) {
-      if (err) throw err;
-
-      let priceSum = prod[0].price;
-      for (let i = 1; i < prod.length; i++) {
-        priceSum = prod[i].price + priceSum;
+    console.log(cart);
+    product.find({ _id: { $in: cart.products } }, function(error, prod) {
+      if (error) console.log(error);
+      if (prod.length > 0) {
+        let priceSum = prod[0].price;
+        for (let i = 1; i < prod.length; i++) {
+          priceSum = prod[i].price + priceSum;
+        }
+        res.status(200).json({ prod, total: priceSum });
+      } else {
+        let priceSum = 0;
+        res.status(200).json({ prod, total: priceSum });
       }
-
-      res.status(200).json({ prod, total: priceSum });
     });
+  });
+});
+
+//Get Specific product
+router.post("/getprod", (req, res) => {
+  product.find({ _id: { $in: req.body.id } }, function(err, prod) {
+    console.log(prod);
+    res.status(200).send(prod);
   });
 });
 

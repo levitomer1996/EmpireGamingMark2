@@ -7,6 +7,7 @@ import { ProductsComponent } from "./components/products/products.component";
 import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
 import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirmed-page.component";
+import { ShoppingPageComponent } from "./components/shopping-page/shopping-page.component";
 
 const routes: Routes = [
   { path: "", component: HomepageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: "register", component: RegisterPageComponent },
   { path: "products", component: ProductsComponent },
   { path: "payment", component: PaymentComponent },
+  { path: "shopping", component: ShoppingPageComponent },
   { path: "order/:id", component: CofirmedPageComponent }
 ];
 

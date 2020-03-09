@@ -60,4 +60,12 @@ export class CartService {
   getOrder(id) {
     return this.http.get(`http://localhost:3000/cart/getorder/${id}`);
   }
+
+  getProdcut(prod) {
+    return this.http.post(
+      `http://localhost:3000/cart/getprod`,
+      prod,
+      httpOptions
+    );
+  }
 }

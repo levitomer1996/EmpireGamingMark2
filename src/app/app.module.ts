@@ -89,6 +89,9 @@ import { CheckOutComponent } from "./components/check-out/check-out.component";
 import { PaymentComponent } from "./components/payment/payment.component";
 import { SecondPaymentComponent } from "./components/payment/second-payment/second-payment.component";
 import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirmed-page.component";
+import { ShoppingPageComponent } from "./components/shopping-page/shopping-page.component";
+import { CartSideNavComponent } from "./components/shopping-page/cart-side-nav/cart-side-nav.component";
+import { ShoppingProdcutHolderComponent } from './components/shopping-page/shopping-prodcut-holder/shopping-prodcut-holder.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +113,10 @@ import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirm
     CheckOutComponent,
     PaymentComponent,
     SecondPaymentComponent,
-    CofirmedPageComponent
+    CofirmedPageComponent,
+    ShoppingPageComponent,
+    CartSideNavComponent,
+    ShoppingProdcutHolderComponent
   ],
   imports: [
     BrowserModule,
@@ -122,6 +128,7 @@ import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirm
     MatIconModule,
     MatFormFieldModule,
     MatListModule,
+    MatSidenavModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -131,6 +138,8 @@ import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirm
     PortalModule,
     ScrollingModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
     MatToolbarModule,
     MatSelectModule,
     MatProgressSpinnerModule,

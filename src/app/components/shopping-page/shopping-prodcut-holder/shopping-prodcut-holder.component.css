@@ -1,0 +1,15 @@
+.cont {
+  width: 75%;
+  float: right;
+}
+.card {
+  width: 25%;
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 3%;
+  margin-left: 3%;
+}
+img {
+  width: 100%;
+  height: 20%;
+}

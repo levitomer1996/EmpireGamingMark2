@@ -1,0 +1,14 @@
+<nav class="sideCart">
+  <div class="productContainer">
+    <div
+      class="productHolder"
+      *ngFor="let cart of cartProds | async; let i = index"
+    >
+      <h4>{{ cart.name }}</h4>
+      <h4 class="total">{{ cart.price }}$</h4>
+    </div>
+  </div>
+  <button class="glow-on-hover" type="submit">
+    Check-Out for {{ total }}$
+  </button>
+</nav>
