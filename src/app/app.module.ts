@@ -91,7 +91,9 @@ import { SecondPaymentComponent } from "./components/payment/second-payment/seco
 import { CofirmedPageComponent } from "./components/payment/cofirmed-page/cofirmed-page.component";
 import { ShoppingPageComponent } from "./components/shopping-page/shopping-page.component";
 import { CartSideNavComponent } from "./components/shopping-page/cart-side-nav/cart-side-nav.component";
-import { ShoppingProdcutHolderComponent } from './components/shopping-page/shopping-prodcut-holder/shopping-prodcut-holder.component';
+import { ShoppingProdcutHolderComponent } from "./components/shopping-page/shopping-prodcut-holder/shopping-prodcut-holder.component";
+import { UserPageComponent } from "./components/user-page/user-page.component";
+import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.component";
 
 @NgModule({
   declarations: [
@@ -116,7 +118,9 @@ import { ShoppingProdcutHolderComponent } from './components/shopping-page/shopp
     CofirmedPageComponent,
     ShoppingPageComponent,
     CartSideNavComponent,
-    ShoppingProdcutHolderComponent
+    ShoppingProdcutHolderComponent,
+    UserPageComponent,
+    MyOrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -135,6 +139,7 @@ import { ShoppingProdcutHolderComponent } from './components/shopping-page/shopp
     MatCheckboxModule,
     A11yModule,
     DragDropModule,
+    MatMenuModule,
     PortalModule,
     ScrollingModule,
     MatButtonModule,

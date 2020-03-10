@@ -2,7 +2,7 @@
   <a class="hello">
     Hello<strong> {{ userName }}</strong>
   </a>
-  <a href="" class="userPage">Go to user page</a>
+  <a [href]="hrefLink" class="userPage">Go to user page.</a>
 
   <ngbd-modal-component></ngbd-modal-component>
   <button (click)="logout()">Logout</button>

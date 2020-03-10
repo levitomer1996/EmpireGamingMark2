@@ -1,0 +1,15 @@
+nav {
+  width: 100%;
+  background-color: rgba(77, 57, 57, 0.42);
+  display: inline-block;
+}
+button {
+  width: 20%;
+}
+button:hover {
+  border: 1.5px black solid;
+  background-color: rgb(122, 122, 173);
+}
+.cont {
+  display: inline-block;
+}

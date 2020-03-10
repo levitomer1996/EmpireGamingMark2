@@ -11,12 +11,14 @@ import * as loggedActions from "../../../actions/isLogged.actions";
 export class LoginContainerComponent implements OnInit {
   loggedUser;
   @Input() userName;
+  hrefLink;
+
   constructor(private store: Store<LogState>) {
     store.select("isLogged").subscribe(data => (this.loggedUser = data));
   }
 
   ngOnInit() {
-    console.log(this.userName);
+    this.hrefLink = `userpage/${this.userName}`;
   }
   logout() {
     this.store.dispatch(

@@ -16,6 +16,7 @@ export class RegisterPageComponent implements OnInit {
   //Validators
   email = new FormControl("", [Validators.required, Validators.email]);
   form;
+  hide = true;
   response;
   constructor(
     private rs: RegisterService,

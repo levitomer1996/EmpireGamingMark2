@@ -1,0 +1,16 @@
+<div *ngFor="let order of orders" class="orderCard">
+  <mat-card
+    ><h3>
+      Placed at: <strong>{{ order.time_Created }}</strong>
+    </h3>
+    <h3>
+      Total paid: <strong>{{ order.total }}$</strong>
+    </h3>
+    <button mat-button [matMenuTriggerFor]="belowMenu">Products</button>
+    <mat-menu #belowMenu="matMenu" yPosition="below">
+      <h3 mat-menu-item *ngFor="let prod of order.products">
+        {{ prod.name }} - {{ prod.price }}$
+      </h3>
+    </mat-menu></mat-card
+  >
+</div>

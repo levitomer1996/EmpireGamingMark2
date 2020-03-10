@@ -5,6 +5,7 @@ var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10);
 var jwt = require("jsonwebtoken");
 let newUser = require("../mongoModels/newUser");
+let order = require("../mongoModels/order");
 var session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const uuidv4 = require("uuid/v4");
@@ -117,6 +118,16 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/userorders", (req, res) => {
+  jwt.verify(req.body.token, secret, function(err, decoded) {
+    order.find({ OwnerEmail: { $in: decoded.email } }, function(
+      error,
+      orderList
+    ) {
+      res.status(200).json({ orders: orderList });
+    });
+  });
+});
 router.post("/checktoken", (req, res) => {
   // var decoded = jwt.verify(req.body.token, "tomer");
   // console.log(decoded);
