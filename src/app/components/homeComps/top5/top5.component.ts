@@ -54,6 +54,7 @@ export class Top5Component implements OnInit {
   addToCart(id: any) {
     if (this.userName.logged) {
       let cart = { product: id, userOwner: this.userName.userName };
+      console.log(cart);
       this.cs.handleCart(cart).subscribe(data => console.log(data));
     } else {
       alert("Must be logged in!");

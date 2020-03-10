@@ -1,10 +1,6 @@
 let mongoose = require("mongoose");
 
-let cartSchema = mongoose.Schema({
-  _id: {
-    type: String,
-    required: true
-  },
+let newCartSchema = mongoose.Schema({
   userOwner: {
     type: String,
     required: true
@@ -19,4 +15,4 @@ let cartSchema = mongoose.Schema({
   }
 });
 
-let cart = (module.exports = mongoose.model("cart", cartSchema));
+let newCart = (module.exports = mongoose.model("newCart", newCartSchema));

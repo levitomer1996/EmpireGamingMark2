@@ -65,7 +65,8 @@ export class NgbdModalContent {
       new Set_Logged({
         logged: true,
         userName: this.cartData.userName,
-        isModalOpened: true
+        isModalOpened: true,
+        isModalPurchaseCommited: false
       })
     );
   }

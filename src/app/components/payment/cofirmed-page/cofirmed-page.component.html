@@ -1,1 +1,20 @@
-<p>cofirmed-page works!</p>
+<mat-card></mat-card>
+  <mat-card-title>Dear {{ confirmedOrder.name }}</mat-card-title>
+  <p>
+    Your order was confirmed by our system please follow the next details and
+    save your order number.
+  </p>
+  <h3>
+    Order number: <strong>{{ confirmedOrder._id }}</strong>
+  </h3>
+  <h3>
+    Time purchased: <strong>{{ confirmedOrder.time_Created }}</strong>
+  </h3>
+  <h3>
+    Expected arrival time: <strong>{{ confirmedOrder.arrival_Time }}</strong>
+  </h3>
+  <h3>
+    Total payment: <strong>{{ confirmedOrder.total }}$</strong>
+  </h3>
+  <h3>You can watch your personal orders <a href="/userpanel">Here</a></h3>
+</mat-card>

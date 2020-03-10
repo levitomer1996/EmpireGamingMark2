@@ -61,6 +61,14 @@ export class CartService {
     return this.http.get(`http://localhost:3000/cart/getorder/${id}`);
   }
 
+  deleteCart(user) {
+    return this.http.post(
+      `http://localhost:3000/cart/deletecart`,
+      user,
+      httpOptions
+    );
+  }
+
   getProdcut(prod) {
     return this.http.post(
       `http://localhost:3000/cart/getprod`,

@@ -7,6 +7,7 @@ var CreditCard = require("credit-card");
 let cart = require("../mongoModels/cart");
 let product = require("../mongoModels/products");
 let order = require("../mongoModels/order");
+let newCart = require("../mongoModels/newCart");
 
 mongoose.connect("mongodb://localhost/EmpireGaming", {
   useNewUrlParser: true,
@@ -43,12 +44,12 @@ router.post("/carthandle", async (req, res) => {
       req.body.userOwner,
       req.body.product
     );
-    console.log(isExist);
+
     if (!isExist) {
-      const requestedCart = new cart({
+      const requestedCart = new newCart({
         userOwner: req.body.userOwner,
         time_created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
-        products: req.body.product
+        products: []
       });
       db.collection("carts").insertOne(requestedCart, function(err, cart) {
         if (err) throw err;
@@ -71,20 +72,31 @@ router.post("/getusercart", (req, res) => {
     err,
     cart
   ) {
-    console.log(cart);
-    product.find({ _id: { $in: cart.products } }, function(error, prod) {
-      if (error) console.log(error);
-      if (prod.length > 0) {
-        let priceSum = prod[0].price;
-        for (let i = 1; i < prod.length; i++) {
-          priceSum = prod[i].price + priceSum;
+    if (cart.products !== null) {
+      product.find({ _id: { $in: cart.products } }, function(error, prod) {
+        if (error) console.log(error);
+        if (prod.length > 0) {
+          let priceSum = prod[0].price;
+          for (let i = 1; i < prod.length; i++) {
+            priceSum = prod[i].price + priceSum;
+          }
+          res.status(200).json({ prod, total: priceSum });
+        } else {
+          let priceSum = 0;
+          res.status(200).json({ prod, total: priceSum });
         }
-        res.status(200).json({ prod, total: priceSum });
-      } else {
-        let priceSum = 0;
-        res.status(200).json({ prod, total: priceSum });
-      }
-    });
+      });
+    } else {
+      const requestedCart = new newCart({
+        userOwner: req.body.userName,
+        time_created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
+        products: []
+      });
+      db.collection("carts").insertOne(requestedCart, function(err, newCart) {
+        console.log("New cart was created.");
+        res.sendStatus(200);
+      });
+    }
   });
 });
 
@@ -173,13 +185,19 @@ router.post("/createorder", (req, res) => {
     }
   );
 });
+//Delete users's cart:
+router.post("/deletecart", (req, res) => {
+  console.log(req.body.userName);
+  cart.findOneAndDelete({ userOwner: req.body.userName }, function(err, cart) {
+    console.log("cart was deleted");
+    res.sendStatus(200);
+  });
+});
 
 //Get Order data:
 router.get("/getorder/:id", (req, res) => {
-  console.log(req.params.id);
-
-  db.collection("orders").find({ _id: req.params.id }, (er, order) => {
-    console.log(order);
+  order.find({ _id: { $in: req.params.id } }, function(error, order) {
+    res.status(200).json(order[0]);
   });
 });
 module.exports = router;
