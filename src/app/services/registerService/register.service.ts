@@ -9,15 +9,27 @@ const httpOptions = {
   })
 };
 
+export class checkExistance {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: "root"
 })
 export class RegisterService {
   constructor(private http: HttpClient) {}
 
-  addUser(user: registerForm): Observable<registerForm> {
-    return this.http.post<registerForm>(
-      `http://localhost:3000/users/register`,
+  checkCheckExistance(user: checkExistance): Observable<checkExistance> {
+    return this.http.post<checkExistance>(
+      `http://localhost:3000/users/checkuser`,
+      user,
+      httpOptions
+    );
+  }
+  newUser(user) {
+    return this.http.post(
+      `http://localhost:3000/users/newuser`,
       user,
       httpOptions
     );

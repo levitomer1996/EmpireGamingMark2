@@ -66,27 +66,38 @@ function checkUserExistance(user) {
   });
 }
 
-router.post("/register", async (req, res) => {
+router.post("/checkuser", async (req, res) => {
   try {
     let data = await checkUserExistance(req.body.email);
     var hash = bcrypt.hashSync(req.body.password, salt);
-    const requestedUser = new newUser({
-      email: req.body.email,
-      password: hash,
-      fname: req.body.fname,
-      lname: req.body.lname,
-      city: req.body.city,
-      adress: req.body.adress,
-      role: "Cutomer"
-    });
-    db.collection("users").insertOne(requestedUser, function(err, res) {
-      if (err) throw err;
-    });
 
-    res.status(200).json({ status: 200, name: "Tomer" });
+    res.status(200).json({
+      nextForm: true,
+      message: null,
+      email: req.body.email,
+      password: hash
+    });
   } catch (err) {
-    res.json({ status: 500, message: err });
+    res.json({ nextForm: false, message: err, email: null, password: null });
   }
+});
+
+router.post("/newuser", (req, res) => {
+  const requestedUser = new newUser({
+    email: req.body.email,
+    password: req.body.password,
+    fname: req.body.f_name,
+    lname: req.body.l_name,
+    city: req.body.city,
+    adress: req.body.adress,
+    role: "Cutomer"
+  });
+  db.collection("users").insertOne(requestedUser, function(err, user) {
+    if (err) {
+      res.status(401).send({ err });
+    }
+    res.status(200).send({ message: `${req.body.email} Created`, next: true });
+  });
 });
 
 //Check user and password before keeping up.

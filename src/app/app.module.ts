@@ -62,7 +62,6 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { HomepageComponent } from "./components/homepage/homepage.component";
 import { CarousalesComponent } from "./components/homeComps/carousales/carousales.component";
 import { LoginPageComponent } from "./components/login-page/login-page.component";
-import { RegisterPageComponent } from "./components/register-page/register-page.component";
 
 //redux
 import { StoreModule } from "@ngrx/store";
@@ -94,6 +93,7 @@ import { CartSideNavComponent } from "./components/shopping-page/cart-side-nav/c
 import { ShoppingProdcutHolderComponent } from "./components/shopping-page/shopping-prodcut-holder/shopping-prodcut-holder.component";
 import { UserPageComponent } from "./components/user-page/user-page.component";
 import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.component";
+import { RegisterPageComponent } from "./components/register-page/register-page.component";
 
 @NgModule({
   declarations: [
@@ -103,7 +103,6 @@ import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.co
     HomepageComponent,
     CarousalesComponent,
     LoginPageComponent,
-    RegisterPageComponent,
     LoginContainerComponent,
     LoginRegisterButtonsComponent,
     CardsLayoutComponent,
@@ -120,7 +119,8 @@ import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.co
     CartSideNavComponent,
     ShoppingProdcutHolderComponent,
     UserPageComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
@@ -146,6 +146,7 @@ import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.co
     MatButtonToggleModule,
     MatSlideToggleModule,
     MatToolbarModule,
+    MatStepperModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     StoreModule.forRoot({

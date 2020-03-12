@@ -1,9 +1,16 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
-import { FormControl, Validators, FormBuilder } from "@angular/forms";
-import { registerForm } from "../../models/registerForm";
-import { RegisterService } from "../../services/registerService/register.service";
+import { Component, OnInit } from "@angular/core";
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+  FormBuilder
+} from "@angular/forms";
+import { RegisterService } from "src/app/services/registerService/register.service";
+import { Store, select } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { ThrowStmt } from "@angular/compiler";
 import { Router } from "@angular/router";
-import { promise } from "protractor";
 
 @Component({
   selector: "app-register-page",
@@ -11,54 +18,140 @@ import { promise } from "protractor";
   styleUrls: ["./register-page.component.css"]
 })
 export class RegisterPageComponent implements OnInit {
-  @Output() newUser: EventEmitter<any> = new EventEmitter();
+  cityList: SelectCity[] = [
+    {
+      name: "Tel-Aviv"
+    },
+    {
+      name: "Jerusalem"
+    },
+    { name: "Haifa" },
+    { name: "Holon" },
+    { name: "Beer-Sheva" },
+    { name: "Kiryan - Malachi" }
+  ];
+  isLinear = false;
+  showResponseError: boolean = false;
+  generalError: boolean = false;
+  showSpinner: boolean = false;
+  showStepper: boolean = true;
+  showDonePage: boolean = false;
 
-  //Validators
-  email = new FormControl("", [Validators.required, Validators.email]);
-  form;
-  hide = true;
-  response;
+  error: string;
+  registerForm;
+  registerFormDetails;
+  detailsForm;
+  showError: boolean = false;
+  //Email validator.
+  emailFormControl = new FormControl("", [
+    Validators.required,
+    Validators.email
+  ]);
+
+  //Password validtor
+  passValidator = new FormControl("", [
+    Validators.required,
+    Validators.minLength(6)
+  ]);
+  ConfirmPassValidator = new FormControl("", [Validators.required]);
+
+  firstName = new FormControl("", [Validators.required]);
+  lastName = new FormControl("", [Validators.required]);
+  adress = new FormControl("", [Validators.required]);
+  city = new FormControl("", [Validators.required]);
+
   constructor(
-    private rs: RegisterService,
-    private registerForm: FormBuilder,
+    private formBuilder: FormBuilder,
+    private Rs: RegisterService,
     private router: Router
   ) {
-    this.form = this.registerForm.group({
-      email: "",
-      password: "",
-      fname: "",
-      lname: "",
-      city: "",
-      adress: ""
+    this.registerForm = this.formBuilder.group({
+      email: this.emailFormControl,
+      password: this.passValidator,
+      confirmPass: this.ConfirmPassValidator
+    });
+
+    this.detailsForm = this.formBuilder.group({
+      f_name: this.firstName,
+      l_name: this.lastName,
+      adress: this.adress,
+      city: this.city
     });
   }
 
-  ngOnInit() {}
-  getErrorMessage() {
-    return this.email.hasError("required")
-      ? "You must enter a value"
-      : this.email.hasError("email")
-      ? "Not a valid email"
-      : "";
+  ngOnInit(): void {}
+
+  getPasswordError() {
+    if (this.passValidator.hasError("required")) {
+      return "Password is required";
+    } else if (this.passValidator.hasError("minLength")) {
+      return "Password must be 6 characters or more.";
+    } else if (this.registerForm.password !== this.registerForm.confirmPass) {
+      this.showError = true;
+    }
   }
 
-  postUser(user) {
-    return new Promise((reso, rej) => {
-      this.rs.addUser(user).subscribe(data => {
-        reso(data);
+  handleSignUp(val: object) {
+    if (this.generalError) {
+      this.showResponseError = true;
+      setTimeout(() => {
+        this.showResponseError = false;
+      }, 5000);
+    } else {
+      this.showSpinner = true;
+      this.showStepper = false;
+      let newUser = { ...val, ...this.registerFormDetails };
+      this.Rs.newUser(newUser).subscribe((data: ResponseRegister) => {
+        if (data.next) {
+          this.showSpinner = false;
+          this.router.navigate(["/"]);
+        } else {
+          this.showStepper = true;
+        }
       });
-    });
+    }
   }
 
-  async handSubmit(val) {
-    try {
-      let pending = await this.postUser(val);
-      this.response = pending;
-      if (this.response.status == 200) {
-        this.router.navigate(["./"]);
-      } else if (this.response.status == 500) {
-        alert(this.response.message);
+  handSubmit(form) {
+    let userToCheck = {
+      email: form.email,
+      password: form.password
+    };
+    this.Rs.checkCheckExistance(userToCheck).subscribe(
+      (response: ResponseCheckedUser) => {
+        if (response.nextForm) {
+          this.isLinear = false;
+          this.registerFormDetails = {
+            email: response.email,
+            password: response.password
+          };
+        } else {
+          this.isLinear = true;
+          this.error = response.message;
+          this.showResponseError = true;
+          this.generalError = true;
+          setTimeout(() => {
+            this.showResponseError = false;
+          }, 12000);
+        }
       }
-    } catch (err) {}
+    );
   }
+}
+
+//Models
+export class ResponseCheckedUser {
+  nextForm: boolean;
+  message: string;
+  email: string;
+  password: string;
+}
+
+export class SelectCity {
+  name: string;
+}
+
+export class ResponseRegister {
+  message: string;
+  next: boolean;
 }
