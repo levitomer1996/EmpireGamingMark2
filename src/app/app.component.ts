@@ -6,6 +6,7 @@ import * as loggedActions from "./actions/isLogged.actions";
 
 class OninitRes {
   token: any;
+  isAdmin: boolean;
 }
 @Component({
   selector: "app-root",
@@ -27,13 +28,26 @@ export class AppComponent {
         if (!data.token) {
           console.log("User not logged in.");
         } else {
-          this.store.dispatch(
-            new loggedActions.Set_Logged({
-              logged: true,
-              userName: data.token.email,
-              isModalOpened: false
-            })
-          );
+          if (data.isAdmin == true) {
+            console.log(`Isadmin: ${data.isAdmin}`);
+            this.store.dispatch(
+              new loggedActions.Set_Logged({
+                logged: true,
+                userName: data.token.email,
+                isModalOpened: false,
+                isAdmin: true
+              })
+            );
+          } else {
+            this.store.dispatch(
+              new loggedActions.Set_Logged({
+                logged: true,
+                userName: data.token.email,
+                isModalOpened: false,
+                isAdmin: false
+              })
+            );
+          }
         }
       });
   }

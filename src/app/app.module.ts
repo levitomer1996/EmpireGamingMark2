@@ -94,6 +94,9 @@ import { ShoppingProdcutHolderComponent } from "./components/shopping-page/shopp
 import { UserPageComponent } from "./components/user-page/user-page.component";
 import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.component";
 import { RegisterPageComponent } from "./components/register-page/register-page.component";
+import { AdminPageComponent } from "./components/admin-page/admin-page.component";
+import { AddProductComponent } from "./components/admin-page/add-product/add-product.component";
+import { EditProductComponent } from "./components/admin-page/edit-product/edit-product.component";
 
 @NgModule({
   declarations: [
@@ -120,7 +123,10 @@ import { RegisterPageComponent } from "./components/register-page/register-page.
     ShoppingProdcutHolderComponent,
     UserPageComponent,
     MyOrdersComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    AdminPageComponent,
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
@@ -133,10 +139,13 @@ import { RegisterPageComponent } from "./components/register-page/register-page.
     MatFormFieldModule,
     MatListModule,
     MatSidenavModule,
+    MatAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatCheckboxModule,
+    CdkTableModule,
+    MatTabsModule,
     A11yModule,
     DragDropModule,
     MatMenuModule,

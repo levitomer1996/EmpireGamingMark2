@@ -2,7 +2,12 @@ import { Action } from "@ngrx/store";
 import { isLogged } from "../models/isLogged.mode";
 import * as loggedActions from "../actions/isLogged.actions";
 
-const initialState = { logged: false, userName: "", isModalOpened: false };
+const initialState = {
+  logged: false,
+  userName: "",
+  isModalOpened: false,
+  isAdmin: false
+};
 
 export function isLoggedReducer(
   state = initialState,

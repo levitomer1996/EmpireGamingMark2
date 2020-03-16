@@ -46,9 +46,13 @@ router.get("/d", vt, (req, res) => {
 router.post("/oninit", (req, res) => {
   jwt.verify(req.body.token, secret, (err, decoded) => {
     if (err) {
-      res.send({ token: false });
+      res.send({ token: false, isAdmin: false });
     } else {
-      res.status(200).send({ token: decoded });
+      if (decoded.role === "Admin") {
+        res.status(200).send({ token: decoded, isAdmin: true });
+      } else {
+        res.status(200).send({ token: decoded, isAdmin: false });
+      }
     }
   });
 });
@@ -123,7 +127,12 @@ router.post("/login", async (req, res) => {
     req.session.token = accessToken;
     req.session.isLogged = true;
     req.session.save();
-    res.status(200).json({ status: 200, token: accessToken });
+    console.log(user.role);
+    if (user.role === "Admin") {
+      res.status(200).json({ status: 200, token: accessToken, isAdmin: true });
+    } else if (user.role === "Customer") {
+      res.status(200).json({ status: 200, token: accessToken, isAdmin: false });
+    }
   } catch (err) {
     res.json({ message: err, status: 500 });
   }

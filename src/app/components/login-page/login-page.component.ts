@@ -61,19 +61,32 @@ export class LoginPageComponent implements OnInit {
 
   async handSubmit(val) {
     try {
+      console.log("Work");
       let pending = await this.postUser(val);
       this.response = pending;
 
       if (this.response.status == 200) {
         sessionStorage.setItem("token", this.response.token);
-
-        this.store.dispatch(
-          new Set_Logged({
-            logged: true,
-            userName: val.email,
-            isModalOpened: false
-          })
-        );
+        console.log(this.response);
+        if (this.response.isAdmin === true) {
+          this.store.dispatch(
+            new Set_Logged({
+              logged: true,
+              userName: val.email,
+              isModalOpened: true,
+              isAdmin: true
+            })
+          );
+        } else {
+          this.store.dispatch(
+            new Set_Logged({
+              logged: true,
+              userName: val.email,
+              isModalOpened: false,
+              isAdmin: false
+            })
+          );
+        }
 
         this.router.navigate(["./"]);
       } else {

@@ -68,36 +68,38 @@ router.post("/carthandle", async (req, res) => {
 });
 
 router.post("/getusercart", (req, res) => {
-  db.collection("carts").findOne({ userOwner: req.body.userName }, function(
-    err,
-    cart
-  ) {
-    if (cart.products !== null) {
-      product.find({ _id: { $in: cart.products } }, function(error, prod) {
-        if (error) console.log(error);
-        if (prod.length > 0) {
-          let priceSum = prod[0].price;
-          for (let i = 1; i < prod.length; i++) {
-            priceSum = prod[i].price + priceSum;
+  if (req.body.userName) {
+    db.collection("carts").findOne({ userOwner: req.body.userName }, function(
+      err,
+      cart
+    ) {
+      if (cart.products !== null) {
+        product.find({ _id: { $in: cart.products } }, function(error, prod) {
+          if (error) console.log(error);
+          if (prod.length > 0) {
+            let priceSum = prod[0].price;
+            for (let i = 1; i < prod.length; i++) {
+              priceSum = prod[i].price + priceSum;
+            }
+            res.status(200).json({ prod, total: priceSum });
+          } else {
+            let priceSum = 0;
+            res.status(200).json({ prod, total: priceSum });
           }
-          res.status(200).json({ prod, total: priceSum });
-        } else {
-          let priceSum = 0;
-          res.status(200).json({ prod, total: priceSum });
-        }
-      });
-    } else {
-      const requestedCart = new newCart({
-        userOwner: req.body.userName,
-        time_created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
-        products: []
-      });
-      db.collection("carts").insertOne(requestedCart, function(err, newCart) {
-        console.log("New cart was created.");
-        res.sendStatus(200);
-      });
-    }
-  });
+        });
+      } else {
+        const requestedCart = new newCart({
+          userOwner: req.body.userName,
+          time_created: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
+          products: []
+        });
+        db.collection("carts").insertOne(requestedCart, function(err, newCart) {
+          console.log("New cart was created.");
+          res.sendStatus(200);
+        });
+      }
+    });
+  }
 });
 
 //Get Specific product

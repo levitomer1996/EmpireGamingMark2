@@ -2,8 +2,14 @@
   <a class="hello">
     Hello<strong> {{ userName }}</strong>
   </a>
-  <a [href]="hrefLink" class="userPage">Go to user page.</a>
-
+  <!-- <a [href]="hrefLink" class="userPage">Go to user page.</a>
+  <a [href]="adminHref" class="userPage" *ngIf="isAdmin">Go to Admin page.</a> -->
+  <div>
+    <button class="goToAdmin" (click)="goToAdmin()" *ngIf="isAdmin">
+      Go to admin panel
+    </button>
+    <button class="goToUser" (click)="goToUser()">Go to user panel</button>
+  </div>
   <ngbd-modal-component></ngbd-modal-component>
   <button (click)="logout()">Logout</button>
 </div>

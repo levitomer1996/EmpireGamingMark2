@@ -12,4 +12,7 @@ export class LoginRegisterButtonsComponent implements OnInit {
   moveToRegister() {
     this.router.navigate(["./register"]);
   }
+  moveToLogin() {
+    this.router.navigate(["./login"]);
+  }
 }

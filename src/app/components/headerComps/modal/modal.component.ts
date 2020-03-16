@@ -66,7 +66,7 @@ export class NgbdModalContent {
         logged: true,
         userName: this.cartData.userName,
         isModalOpened: true,
-        isModalPurchaseCommited: false
+        isAdmin: this.cartData.isAdmin
       })
     );
   }

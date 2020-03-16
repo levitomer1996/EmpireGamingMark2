@@ -1,0 +1,45 @@
+<form
+  [formGroup]="addForm"
+  class="editForm"
+  (ngSubmit)="addProduct(addForm.value)"
+>
+  <mat-form-field>
+    <mat-label>Product name</mat-label>
+    <input matInput placeholder="Product name" formControlName="name" name />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Category"
+      formControlName="category"
+      category
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Platform</mat-label>
+    <mat-select [formControl]="platform">
+      <mat-option
+        *ngFor="let platform of platformList"
+        [value]="platform.value"
+      >
+        {{ platform.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Price" formControlName="price" price />
+  </mat-form-field>
+  <mat-form-field class="img">
+    <input matInput placeholder="IMG link" formControlName="img" img />
+  </mat-form-field>
+  <button type="submit" class="search" id="btn">Add Product</button>
+</form>
+
+<ngb-alert
+  [dismissible]="false"
+  [type]="alertType"
+  class="error"
+  *ngIf="ShowSuccess"
+>
+  <strong> {{ msg }}</strong>
+</ngb-alert>

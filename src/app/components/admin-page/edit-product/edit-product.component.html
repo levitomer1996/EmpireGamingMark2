@@ -1,0 +1,59 @@
+<form [formGroup]="searchForm" (ngSubmit)="selectProduct(searchForm.value)">
+  <mat-form-field>
+    <input
+      class="search"
+      matInput
+      type="text"
+      placeholder="Search for product to edit"
+      [formControl]="search"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let prod of filteredProducts | async" [value]="prod">
+        {{ prod }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button type="submit" class="search" id="btn">Edit</button>
+</form>
+
+<form
+  *ngIf="showEditForm"
+  [formGroup]="editForm"
+  class="editForm"
+  (ngSubmit)="saveProductEdits(editForm.value)"
+>
+  <mat-form-field>
+    <input matInput placeholder="Product name" formControlName="name" name />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Category"
+      formControlName="category"
+      category
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Platform</mat-label>
+    <mat-select [formControl]="platform">
+      <mat-option
+        *ngFor="let platform of platformList"
+        [value]="platform.value"
+      >
+        {{ platform.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Price" formControlName="price" price />
+  </mat-form-field>
+  <mat-form-field class="img">
+    <input matInput placeholder="IMG link" formControlName="img" img />
+  </mat-form-field>
+  <button type="submit" class="search" id="btn">Save product</button>
+</form>
+
+<ngb-alert [dismissible]="false" *ngIf="showError" class="error">
+  <strong>Something went wrong!</strong> {{ errorString }}
+</ngb-alert>

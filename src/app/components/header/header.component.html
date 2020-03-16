@@ -6,6 +6,6 @@
   <ng-template [ngIf]="userLogged.logged" [ngIfElse]="loggedOut">
     <app-login-container [userName]="userLogged.userName"></app-login-container>
   </ng-template>
-  <app-search></app-search>
-  <app-platform-nav></app-platform-nav>
+
+  <button class="seeOurShop" (click)="goToShop()">See our shop</button>
 </header>

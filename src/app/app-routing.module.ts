@@ -10,6 +10,9 @@ import { ShoppingPageComponent } from "./components/shopping-page/shopping-page.
 import { UserPageComponent } from "./components/user-page/user-page.component";
 import { MyOrdersComponent } from "./components/user-page/my-orders/my-orders.component";
 import { RegisterPageComponent } from "./components/register-page/register-page.component";
+import { AdminPageComponent } from "./components/admin-page/admin-page.component";
+import { EditProductComponent } from "./components/admin-page/edit-product/edit-product.component";
+import { AddProductComponent } from "./components/admin-page/add-product/add-product.component";
 
 const routes: Routes = [
   { path: "", component: HomepageComponent },
@@ -19,7 +22,10 @@ const routes: Routes = [
   { path: "payment", component: PaymentComponent },
   { path: "shopping", component: ShoppingPageComponent },
   { path: "order/:id", component: CofirmedPageComponent },
-  { path: "userpage/:id", component: UserPageComponent }
+  { path: "userpage/:id", component: UserPageComponent },
+  { path: "adminpanel/:id", component: AdminPageComponent },
+  { path: "adminpanel/:id/edit", component: EditProductComponent },
+  { path: "adminpanel/:id/add", component: AddProductComponent }
 ];
 
 @NgModule({
