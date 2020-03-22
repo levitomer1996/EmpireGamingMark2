@@ -16,8 +16,6 @@ export class AdminPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      console.log(this.loggedUser);
-    }, 2000);
+   
   }
 }

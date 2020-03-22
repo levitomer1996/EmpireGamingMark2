@@ -94,7 +94,7 @@ router.post("/newuser", (req, res) => {
     lname: req.body.l_name,
     city: req.body.city,
     adress: req.body.adress,
-    role: "Cutomer"
+    role: "Customer"
   });
   db.collection("users").insertOne(requestedUser, function(err, user) {
     if (err) {
@@ -127,10 +127,10 @@ router.post("/login", async (req, res) => {
     req.session.token = accessToken;
     req.session.isLogged = true;
     req.session.save();
-    console.log(user.role);
     if (user.role === "Admin") {
       res.status(200).json({ status: 200, token: accessToken, isAdmin: true });
     } else if (user.role === "Customer") {
+      console.log("Sharon");
       res.status(200).json({ status: 200, token: accessToken, isAdmin: false });
     }
   } catch (err) {

@@ -55,16 +55,17 @@ export class LoginPageComponent implements OnInit {
 
   postUser(user) {
     return new Promise((reso, rej) => {
-      this.ls.userLogin(user).subscribe(data => reso(data));
+      this.ls.userLogin(user).subscribe(data => {
+        console.log(data);
+        reso(data);
+      });
     });
   }
 
   async handSubmit(val) {
     try {
-      console.log("Work");
       let pending = await this.postUser(val);
       this.response = pending;
-
       if (this.response.status == 200) {
         sessionStorage.setItem("token", this.response.token);
         console.log(this.response);
@@ -77,6 +78,7 @@ export class LoginPageComponent implements OnInit {
               isAdmin: true
             })
           );
+          this.router.navigate(["./"]);
         } else {
           this.store.dispatch(
             new Set_Logged({
@@ -96,6 +98,8 @@ export class LoginPageComponent implements OnInit {
           this.showError = false;
         }, 3000);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error");
+    }
   }
 }
