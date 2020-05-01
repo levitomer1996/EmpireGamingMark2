@@ -150,6 +150,13 @@ router.post("/remove", (req, res) => {
   res.status(200).json(`${req.body.product} Was removed`);
 });
 
+router.post("/removecart", (req, res) => {
+  cart.findOneAndDelete({ userOwner: req.body.userName }, (err, cart) => {
+    console.log(cart);
+    res.status(200);
+  });
+});
+
 //Handle orders
 function checkCardValid(c) {
   return new Promise((resolve, reject) => {

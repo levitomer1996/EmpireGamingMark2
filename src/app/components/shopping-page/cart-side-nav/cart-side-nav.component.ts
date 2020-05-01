@@ -8,6 +8,7 @@ import * as TempoActions from "../../../actions/tempoOrder.actions";
 import { CartService } from "src/app/services/CartSerice/cart.service";
 import { isLogged } from "src/app/models/isLogged.mode";
 import { Router } from "@angular/router";
+import { data } from "../../headerComps/modal/modal.component";
 
 export class userData {
   user: Object;
@@ -23,6 +24,7 @@ export class CartSideNavComponent implements OnInit {
   logState: any;
   total: number;
   cartProds: Observable<interiorProduct[]>;
+  prodsList;
   constructor(
     private cartStore: Store<CartState>,
     private cs: CartService,
@@ -30,7 +32,12 @@ export class CartSideNavComponent implements OnInit {
     private orderStore: Store<TempoState>,
     private router: Router
   ) {
+    cartStore.select("cart").subscribe(data => {
+      this.prodsList = data;
+    });
+
     this.cartProds = this.cartStore.select("cart");
+
     logStore
       .select("isLogged")
       .subscribe((data: LogState) => (this.logState = data));
@@ -64,7 +71,7 @@ export class CartSideNavComponent implements OnInit {
       console.log(this.userResponse);
       this.orderStore.dispatch(
         new TempoActions.AddTempo({
-          products: this.cartProds,
+          products: this.prodsList,
           name: this.userResponse.fname + " " + this.userResponse.lname,
           total: this.total,
           city: this.userResponse.city,

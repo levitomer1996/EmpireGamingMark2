@@ -31,13 +31,11 @@ export class SecondPaymentComponent implements OnInit {
     logStore.select("isLogged").subscribe(data => {
       this.isLogged = data;
     });
+    
     store.select("tempo").subscribe((data: TempoOrder) => {
       this.tempo = data;
     });
     this.products = this.tempo.products;
-    setTimeout(() => {
-      console.log(this.isLogged);
-    }, 3000);
   }
 
   ngOnInit(): void {}

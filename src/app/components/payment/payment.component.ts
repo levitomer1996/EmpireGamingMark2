@@ -106,11 +106,11 @@ export class PaymentComponent implements OnInit {
     this.checked = true;
     this.form = this.paymentForm.group({
       number: "",
-      expMonth: String,
-      expYear: Number,
-      ownerF_name: String,
-      ownerL_name: String,
-      cvv: Number
+      expMonth: "",
+      expYear: "",
+      ownerF_name: "",
+      ownerL_name: "",
+      cvv: ""
     });
     console.log(this.cartProds);
   }

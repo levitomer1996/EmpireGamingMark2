@@ -36,6 +36,14 @@ export class CartService {
     );
   }
 
+  removeCart(user) {
+    return this.http.post<any>(
+      `http://localhost:3000/cart/removecart`,
+      user,
+      httpOptions
+    );
+  }
+
   checkCreditCard(details) {
     return this.http.post<any>(
       `http://localhost:3000/cart/checkcc`,
