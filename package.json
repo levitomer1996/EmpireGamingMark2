@@ -34,7 +34,7 @@
     "credit-card-type": "^8.3.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.8.12",
     "ngx-credit-cards": "^1.0.9",
